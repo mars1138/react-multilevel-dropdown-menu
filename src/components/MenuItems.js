@@ -40,7 +40,30 @@ const MenuItems = ({ items, depthLevel }) => {
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      {items.submenu ? (
+      {items.submenu && items.url ? (
+        <>
+          <button
+            type="button"
+            aria-haspopup="menu"
+            aria-expanded={dropdown ? 'true' : 'false'}
+            onClick={() => setDropdown((prev) => !prev)}
+          >
+            <Link to={items.url}>
+              {items.title}
+              {depthLevel > 0 ? (
+                <span>&raquo;</span>
+              ) : (
+                <span className="arrow" />
+              )}
+            </Link>
+          </button>
+          <Dropdown
+            depthLevel={depthLevel}
+            submenus={items.submenu}
+            dropdown={dropdown}
+          />
+        </>
+      ) : !items.url && items.submenu ? (
         <>
           <button
             type="button"
